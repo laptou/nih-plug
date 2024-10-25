@@ -4,7 +4,7 @@ use std::borrow::Cow;
 
 use crate::core::Font;
 
-use iced_baseview::runtime::{font, Command};
+use iced_baseview::runtime::{font, Task};
 // This module provides a re-export and simple font wrappers around the re-exported fonts.
 pub use nih_plug_assets::*;
 

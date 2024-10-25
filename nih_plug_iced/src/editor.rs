@@ -6,8 +6,8 @@ use crossbeam::channel;
 use iced_baseview::settings::IcedBaseviewSettings;
 use nih_plug::prelude::{Editor, GuiContext, ParentWindowHandle};
 use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
-use std::{borrow::Cow, sync::atomic::Ordering};
 use std::sync::Arc;
+use std::{borrow::Cow, sync::atomic::Ordering};
 
 use crate::{wrapper, IcedEditor, IcedState, ParameterUpdate};
 
@@ -67,6 +67,12 @@ impl<E: IcedEditor> Editor for IcedEditorWrapper<E> {
         //       This will panic if the context could not be created.
         let window = iced_baseview::open_parented::<wrapper::IcedEditorWrapperApplication<E>, _>(
             &ParentWindowHandleAdapter(parent),
+            // We use this wrapper to be able to pass the GUI context to the editor
+            (
+                context,
+                self.parameter_updates_receiver.clone(),
+                self.initialization_flags.clone(),
+            ),
             Settings {
                 window: WindowOpenOptions {
                     title: String::from("iced window"),
@@ -106,12 +112,9 @@ impl<E: IcedEditor> Editor for IcedEditorWrapper<E> {
                     ignore_non_modifier_keys: false,
                     always_redraw: true,
                 },
-                // We use this wrapper to be able to pass the GUI context to the editor
-                flags: (
-                    context,
-                    self.parameter_updates_receiver.clone(),
-                    self.initialization_flags.clone(),
-                ),
+                graphics_settings: GraphicsSettings {
+                    ..Default::default()
+                },
                 fonts: self.fonts.clone(),
             },
         );

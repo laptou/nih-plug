@@ -95,9 +95,9 @@ use crossbeam::channel;
 use iced_baseview::core::{Color, Element, Font};
 use iced_baseview::futures::{Executor, Subscription};
 use iced_baseview::graphics::Antialiasing;
-use iced_baseview::runtime::Command;
-use iced_baseview::style::application::StyleSheet;
-use iced_baseview::widget::renderer::Settings as RendererSettings;
+use iced_baseview::runtime::Task;
+use iced_baseview::DefaultStyle;
+// use iced_baseview::widget::renderer::Settings as RendererSettings;
 use iced_baseview::window::WindowSubs;
 use nih_plug::params::persist::PersistentField;
 use nih_plug::prelude::{Editor, GuiContext};
@@ -173,13 +173,13 @@ pub trait IcedEditor: 'static + Send + Sync + Sized {
     /// See [`Application::Flags`].
     type InitializationFlags: 'static + Clone + Send + Sync;
     /// See [`Application::Theme`]
-    type Theme: Default + StyleSheet;
+    type Theme: Default + DefaultStyle;
 
     /// See [`Application::new`]. This also receivs the GUI context in addition to the flags.
     fn new(
         initialization_fags: Self::InitializationFlags,
         context: Arc<dyn GuiContext>,
-    ) -> (Self, Command<Self::Message>);
+    ) -> (Self, Task<Self::Message>);
 
     /// Returns a reference to the GUI context.
     /// [`handle_param_message()`][Self::handle_param_message()] uses this to interact with the
@@ -192,7 +192,7 @@ pub trait IcedEditor: 'static + Send + Sync + Sized {
     fn update(
         &mut self,
         message: Self::Message,
-    ) -> Command<Self::Message>;
+    ) -> Task<Self::Message>;
 
     /// See [`Application::subscription`].
     fn subscription(
@@ -203,7 +203,7 @@ pub trait IcedEditor: 'static + Send + Sync + Sized {
     }
 
     /// See [`Application::view`].
-    fn view(&self) -> Element<'_, Self::Message, Renderer<Self::Theme>>;
+    fn view(&self) -> Element<'_, Self::Message, Self::Theme, Renderer>;
 
     /// See [`Application::background_color`].
     fn background_color(&self) -> Color {
@@ -224,17 +224,18 @@ pub trait IcedEditor: 'static + Send + Sync + Sized {
     fn scale_policy(&self) -> WindowScalePolicy {
         WindowScalePolicy::SystemScaleFactor
     }
+    
 
-    /// See [`Application::renderer_settings`].
-    fn renderer_settings() -> RendererSettings {
-        RendererSettings {
-            // Enable some anti-aliasing by default. Since GUIs are likely very simple and most of
-            // the work will be on the CPU anyways this should not affect performance much.
-            antialiasing: Some(Antialiasing::MSAAx4),
-            default_font: Font::DEFAULT,
-            ..RendererSettings::default()
-        }
-    }
+    // /// See [`Application::renderer_settings`].
+    // fn renderer_settings() -> RendererSettings {
+    //     RendererSettings {
+    //         // Enable some anti-aliasing by default. Since GUIs are likely very simple and most of
+    //         // the work will be on the CPU anyways this should not affect performance much.
+    //         antialiasing: Some(Antialiasing::MSAAx4),
+    //         default_font: Font::DEFAULT,
+    //         ..RendererSettings::default()
+    //     }
+    // }
 
     /// Handle a parameter update using the GUI context.
     fn handle_param_message(&self, message: ParamMessage) {
