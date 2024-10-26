@@ -20,7 +20,7 @@ default = []
 # wgpu = ["iced_baseview/wgpu", "baseview/opengl"]
 # Use OpenGL instead of wgpu for the rendering. This should increase platform
 # compatibility at the cost of some iced features not being available.
-opengl = ["baseview/opengl"]
+opengl = ["baseview/opengl", "iced_baseview/opengl"]
 
 # Enables a debug view in native platforms (press F12)
 debug = ["iced_baseview/debug"]
@@ -45,7 +45,7 @@ atomic_refcell = "0.1"
 baseview = { git = "https://github.com/RustAudio/baseview.git", rev = "579130ecb4f9f315ae52190af42f0ea46aeaa4a2" }
 crossbeam = "0.8"
 # This targets iced 0.10
-iced_baseview = { git = "https://github.com/BillyDM/iced_baseview.git", rev = "a0842a8205c852127981e27de6342cf2e665562f", default_features = false }
+iced_baseview = { git = "https://github.com/laptou/iced_baseview.git", rev = "1b8491ea86fa5b19a03150f099ce0d9cc4d33a23", default_features = false }
 futures-util = "0.3"
 
 # To make the state persistable

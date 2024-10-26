@@ -2589,7 +2589,7 @@ dependencies = [
 [[package]]
 name = "iced_baseview"
 version = "0.1.0"
-source = "git+https://github.com/BillyDM/iced_baseview.git?rev=a0842a8205c852127981e27de6342cf2e665562f#a0842a8205c852127981e27de6342cf2e665562f"
+source = "git+https://github.com/laptou/iced_baseview.git?rev=1b8491ea86fa5b19a03150f099ce0d9cc4d33a23#1b8491ea86fa5b19a03150f099ce0d9cc4d33a23"
 dependencies = [
  "baseview 0.1.0 (git+https://github.com/RustAudio/baseview.git?rev=579130ecb4f9f315ae52190af42f0ea46aeaa4a2)",
  "cfg-if",
