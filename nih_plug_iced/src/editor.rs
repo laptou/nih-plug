@@ -85,7 +85,7 @@ impl<E: IcedEditor> Editor for IcedEditorWrapper<E> {
                         .unwrap_or(WindowScalePolicy::SystemScaleFactor),
 
                     #[cfg(feature = "opengl")]
-                    gl_config: Some(baseview::gl::GlConfig {
+                    gl_config: Some(::baseview::gl::GlConfig {
                         // FIXME: glow_glyph forgot to add an `#extension`, so this won't work under
                         //        OpenGL 3.2 at the moment. With that change applied this should work on
                         //        OpenGL 3.2/macOS.

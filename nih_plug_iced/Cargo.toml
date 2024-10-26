@@ -45,7 +45,7 @@ atomic_refcell = "0.1"
 baseview = { git = "https://github.com/RustAudio/baseview.git", rev = "579130ecb4f9f315ae52190af42f0ea46aeaa4a2" }
 crossbeam = "0.8"
 # This targets iced 0.10
-iced_baseview = { git = "https://github.com/laptou/iced_baseview.git", rev = "1b8491ea86fa5b19a03150f099ce0d9cc4d33a23", default_features = false }
+iced_baseview = { git = "https://github.com/laptou/iced_baseview.git", rev = "1b8491ea86fa5b19a03150f099ce0d9cc4d33a23", default-features = false }
 futures-util = "0.3"
 
 # To make the state persistable
