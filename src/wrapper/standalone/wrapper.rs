@@ -342,6 +342,7 @@ impl<P: Plugin, B: Backend<P>> Wrapper<P, B> {
                             height: height as f64,
                         },
                         scale: scaling_policy,
+                        #[cfg(feature = "opengl")]
                         gl_config: None,
                     },
                     move |window| {
